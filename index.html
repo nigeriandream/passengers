@@ -4,6 +4,7 @@
 <head>
     <title>Passenger Counter</title>
     <style>
+        /* Base styling*/
         body {
             background-image: url("https://images.unsplash.com/photo-1527839321757-ad3a2f2be351?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80");
             background-size: cover;
@@ -92,73 +93,104 @@
 
 <body onload="toggleHistory()">
 
+    <!-- The backdrop containing the main content -->
     <div class="backdrop">
         <h2>Passenger Counter</h2>
 
+        <!-- Element to display the current count -->
         <h1 id="count">0</h1>
+
+        <!-- Button to increment the count -->
         <button class="increment-btn" onclick="incrementCount()">+ + Increment Count + +</button>
+
+        <!-- Button to decrement the count -->
         <button class="decrement-btn" onclick="decrementCount()">- - Decrement Count - -</button>
+
+        <!-- Button to save the count and show history -->
         <button class="save-btn" onclick="saveCount()">Save Count</button>
+
+        <!-- Button to reset the count -->
         <button class="reset-btn" onclick="resetCount()">Reset Count</button>
 
+        <!-- Container to display the count history -->
         <div class="historyContainer">
             <h3>Count History</h3>
+
+            <!-- Element to display the history entries -->
             <div id="history"></div>
+
+            <!-- Button to clear the count history -->
             <button class="history-btn" onclick="resetHistory()">Clear History</button>
         </div>
 
     </div>
     <script>
-        let curCount = 0;
-        let viewCount = document.getElementById('count');
-        let historyEntries = [];
-        let passenger = () => curCount == 1 ? 'Passenger' : 'Passengers';
+        // Initialize variables
+        let curCount = 0; // Keeps track of the current count
+        let viewCount = document.getElementById('count'); // References the element to display the current count
+        let historyEntries = []; // An array to store the history entries
 
+        // Function to determine the correct pluralization of the word "Passenger" based on the current count
+        let passenger = () => curCount === 1 ? 'Passenger' : 'Passengers';
+
+        // Function to increment the count and update the view
         incrementCount = () => {
-            curCount++;
-            viewCount.innerHTML = `${curCount} ${passenger()}`;
+            curCount++; // Increment the current count
+            viewCount.innerHTML = `${curCount} ${passenger()}`; // Update the displayed count with the correct pluralization
         }
+
+        // Function to decrement the count and update the view
         decrementCount = () => {
-            curCount > 0 ? curCount-- : false;
-            viewCount.innerHTML = `${curCount} ${passenger()}`;
+            curCount > 0 ? curCount-- : false; // Decrease the current count, but ensure it never goes below zero
+            viewCount.innerHTML = `${curCount} ${passenger()}`; // Update the displayed count with the correct pluralization
         }
+
+        // Function to reset the count and ask for confirmation before resetting
         resetCount = () => {
-            if (confirm("Are you sure you want to reset the counter?") == true) {
-                curCount = 0;
-                viewCount.innerHTML = 'Counter Reset';
-            } else { "Reset Cancelled." }
-        }
-
-        addHistory = () => {
-            const currentDate = new Date();
-            const dateString = currentDate.toLocaleDateString();
-            const timeString = currentDate.toLocaleTimeString();
-            const historyLine = `${dateString} ${timeString} - Count: ${curCount} ${passenger()}`;
-
-            historyEntries.push(historyLine);
-            document.getElementById('history').innerHTML = historyEntries.join("<br>");
-            curCount = 0;
-            viewCount.innerHTML = 'Saved!';
-        }
-
-        resetHistory = () => {
-            if (confirm("Are you sure you want to clear the count history?") == true) {
-                historyEntries = [];
-                toggleHistory();
-            } else { 'Count history reset cancelled.' }
-        }
-
-        saveCount = () => {
-            curCount > 0 ? addHistory() : false;
-            toggleHistory();
-        }
-
-        toggleHistory = () => {
-            const historyContainer = document.querySelector('.historyContainer');
-            if (historyEntries.length > 0) {
-                historyContainer.style.visibility = "visible";
+            if (confirm("Are you sure you want to reset the counter?") === true) {
+                curCount = 0; // Reset the current count to zero
+                viewCount.innerHTML = 'Counter Reset'; // Update the displayed count to indicate the reset
             } else {
-                historyContainer.style.visibility = "hidden";
+                viewCount.innerHTML = 'Reset Cancelled.'; // If reset is cancelled, show a message in the view
+            }
+        }
+
+        // Function to add a new history entry and reset the count
+        addHistory = () => {
+            const currentDate = new Date(); // Get the current date and time
+            const dateString = currentDate.toLocaleDateString(); // Format the date as a string
+            const timeString = currentDate.toLocaleTimeString(); // Format the time as a string
+            const historyLine = `${dateString} ${timeString} - Count: ${curCount} ${passenger()}`; // Create the history entry text
+
+            historyEntries.push(historyLine); // Add the history entry to the array
+            document.getElementById('history').innerHTML = historyEntries.join("<br>"); // Update the displayed history with line breaks between entries
+            curCount = 0; // Reset the current count to zero after saving
+            viewCount.innerHTML = 'Saved!'; // Show a message in the view indicating that the count is saved
+        }
+
+        // Function to reset the history and ask for confirmation before clearing
+        resetHistory = () => {
+            if (confirm("Are you sure you want to clear the count history?") === true) {
+                historyEntries = []; // Clear the history entries array
+                toggleHistory(); // Toggle the visibility of the history container
+            } else {
+                viewCount.innerHTML = 'Count history reset cancelled.'; // If history reset is cancelled, show a message in the view
+            }
+        }
+
+        // Function to save the current count, add history, and toggle the history container visibility
+        saveCount = () => {
+            curCount > 0 ? addHistory() : false; // If the current count is greater than zero, add a history entry; otherwise, do nothing
+            toggleHistory(); // Toggle the visibility of the history container
+        }
+
+        // Function to toggle the visibility of the history container based on the number of history entries
+        toggleHistory = () => {
+            const historyContainer = document.querySelector('.historyContainer'); // Get the history container element
+            if (historyEntries.length > 0) {
+                historyContainer.style.visibility = "visible"; // If there are history entries, make the history container visible
+            } else {
+                historyContainer.style.visibility = "hidden"; // If there are no history entries, hide the history container
             }
         }
     </script>
