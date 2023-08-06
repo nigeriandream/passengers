@@ -5,7 +5,7 @@
     <title>Passenger Counter</title>
     <style>
         body {
-            background-image: url("https://images.unsplash.com/uploads/1413387158190559d80f7/6108b580?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80");
+            background-image: url("https://images.unsplash.com/photo-1527839321757-ad3a2f2be351?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80");
             background-size: cover;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             font-weight: bold;
@@ -17,8 +17,8 @@
             width: 90%;
             background-color: #00000066;
             backdrop-filter: blur(7px);
-            margin: 5% auto;
-            padding: 1rem;
+            margin: 3% auto;
+            padding: 0.6rem 0.6rem;
             min-height: 80%;
             border-radius: 1rem;
         }
@@ -30,43 +30,46 @@
             height: 80px;
             margin: 10px 5px 10px 5px;
             border: none;
-            font-size: 18px;
             font-weight: bold;
             text-align: center;
-            cursor: pointer;
+            color: white;
             border-radius: 1rem;
-            transition: 0.4s ease all;
+            transition: 0.3s ease all;
         }
 
         button:hover {
             transform: scale(1.02);
         }
 
+        button:active {
+            transform: scale(1);
+        }
+
+
         /* Styling for specific buttons */
         .increment-btn {
-            background-color: rgb(0, 184, 138);
-            color: white;
+            background-color: rgba(0, 184, 138, .85);
+            font-size: 2rem;
         }
 
         .decrement-btn {
-            background-color: rgb(248, 106, 118);
-            color: white;
+            background-color: rgba(248, 106, 118, .85);
+            font-size: 2rem;
         }
 
         .save-btn {
-            background-color: rgb(35, 123, 204);
-            color: white;
+            background-color: rgba(35, 123, 204, .85);
+            font-size: 2rem;
         }
 
         .reset-btn {
-            background-color: rgb(94, 94, 94);
-            color: white;
+            background-color: rgba(94, 94, 94, .85);
+            font-size: 2rem;
         }
 
         .history-btn {
             height: 30px;
-            background-color: rgb(94, 94, 94);
-            color: white;
+            background-color: rgba(94, 94, 94, .85);
         }
 
         /* Styling for history display */
@@ -83,10 +86,6 @@
             padding: 10px;
             background-color: #00000066;
             border-radius: 1rem;
-        }
-
-        .hideHistory {
-            display: none;
         }
     </style>
 </head>
@@ -112,42 +111,45 @@
     <script>
         let curCount = 0;
         let viewCount = document.getElementById('count');
-        let countHistory = document.getElementById('history').innerHTML = 'Count History';
         let historyEntries = [];
+        let passenger = () => curCount == 1 ? 'Passenger' : 'Passengers';
 
         incrementCount = () => {
             curCount++;
-            viewCount.innerHTML = curCount;
-            toggleHistory();
+            viewCount.innerHTML = `${curCount} ${passenger()}`;
         }
         decrementCount = () => {
             curCount > 0 ? curCount-- : false;
-            viewCount.innerHTML = curCount;
+            viewCount.innerHTML = `${curCount} ${passenger()}`;
         }
         resetCount = () => {
-            curCount = 0;
-            viewCount.innerHTML = 0;
+            if (confirm("Are you sure you want to reset the counter?") == true) {
+                curCount = 0;
+                viewCount.innerHTML = 'Counter Reset';
+            } else { "Reset Cancelled." }
         }
 
         addHistory = () => {
             const currentDate = new Date();
             const dateString = currentDate.toLocaleDateString();
             const timeString = currentDate.toLocaleTimeString();
-            const historyLine = `${dateString} ${timeString} - Count: ${curCount}`;
+            const historyLine = `${dateString} ${timeString} - Count: ${curCount} ${passenger()}`;
 
             historyEntries.push(historyLine);
             document.getElementById('history').innerHTML = historyEntries.join("<br>");
             curCount = 0;
-            viewCount.innerHTML = 0;
+            viewCount.innerHTML = 'Saved!';
         }
 
         resetHistory = () => {
-            historyEntries = [];
-            toggleHistory();
+            if (confirm("Are you sure you want to clear the count history?") == true) {
+                historyEntries = [];
+                toggleHistory();
+            } else { 'Count history reset cancelled.' }
         }
 
         saveCount = () => {
-            curCount > 0 ? addHistory() : toggleHistory();
+            curCount > 0 ? addHistory() : false;
             toggleHistory();
         }
 
