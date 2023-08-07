@@ -70,9 +70,15 @@
         }
 
         .history-btn {
-            height: 30px;
             background-color: rgba(0, 0, 0, .85);
+            font-size: 1.5rem;
         }
+
+        .save-csv-btn {
+            background-color: rgba(255, 165, 0, .85);
+            font-size: 1.5rem;
+        }
+
 
         /* Styling for history display */
         #history {
@@ -85,14 +91,14 @@
             overflow-y: scroll;
         }
 
-        .historyContainer {
+        .history-container {
             margin-top: 20px;
             padding: 10px;
             background-color: #00000066;
             border-radius: 1rem;
         }
 
-        .hideHistory {
+        .hide-history {
             display: none;
         }
     </style>
@@ -120,11 +126,14 @@
         <button class="reset-btn" onclick="resetCount()">🔥 Reset Count</button>
 
         <!-- Container to display the count history -->
-        <div class="historyContainer">
+        <div class="history-container">
             <h3>Count History</h3>
 
             <!-- Element to display the history entries -->
             <div id="history"></div>
+
+            <!-- Button to save the count history as a CSV -->
+            <button class="save-csv-btn" onclick="saveHistoryToCSV()">💻 Save History as CSV</button>
 
             <!-- Button to clear the count history -->
             <button class="history-btn" onclick="resetHistory()">☢️ Clear History</button>
@@ -194,13 +203,37 @@
 
         // Function to toggle the visibility of the history container based on the number of history entries
         toggleHistory = () => {
-            const historyContainer = document.querySelector('.historyContainer'); // Get the history container element
-            if (historyEntries.length > 0 || historyContainer.classList.contains('hideHistory')) {
-                historyContainer.classList.remove('hideHistory'); // If there are history entries, make the history container visible
-            } else if (!historyEntries.length > 0 || !historyContainer.classList.contains('hideHistory')) {
-                historyContainer.classList.add('hideHistory'); // If there are no history entries, hide the history container
+            const historyContainer = document.querySelector('.history-container'); // Get the history container element
+            if (historyEntries.length > 0 || historyContainer.classList.contains('hide-history')) {
+                historyContainer.classList.remove('hide-history'); // If there are history entries, make the history container visible
+            } else if (!historyEntries.length > 0 || !historyContainer.classList.contains('hide-history')) {
+                historyContainer.classList.add('hide-history'); // If there are no history entries, hide the history container
             }
         }
+
+        // Function to save the count history as a CSV file
+        function saveHistoryToCSV() {
+            // Prepare CSV content
+            let csvContent = "Date,Time,Count\n"; // Header row
+            historyEntries.forEach(entry => {
+                const [dateTime, count] = entry.split(" - ");
+                const [dateString, timeString] = dateTime.split(" ");
+                csvContent += `${dateString},${timeString},${count}\n`;
+            });
+
+            // Create a Blob containing the CSV content
+            const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+
+            // Create a download link and trigger click event
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "passenger-count-history.csv";
+            link.style.display = "none";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
     </script>
 </body>
 
