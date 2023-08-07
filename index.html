@@ -71,7 +71,7 @@
 
         .history-btn {
             height: 30px;
-            background-color: rgba(94, 94, 94, .85);
+            background-color: rgba(0, 0, 0, .85);
         }
 
         /* Styling for history display */
@@ -81,6 +81,8 @@
             line-height: 1.5;
             min-height: 15px;
             margin-bottom: 10px;
+            max-height: 6rem;
+            overflow-y: scroll;
         }
 
         .historyContainer {
@@ -88,6 +90,10 @@
             padding: 10px;
             background-color: #00000066;
             border-radius: 1rem;
+        }
+
+        .hideHistory {
+            display: none;
         }
     </style>
 </head>
@@ -102,16 +108,16 @@
         <h1 id="count">0</h1>
 
         <!-- Button to increment the count -->
-        <button class="increment-btn" onclick="incrementCount()">+ + Increment Count + +</button>
+        <button class="increment-btn" onclick="incrementCount()">➕ Increment ➕</button>
 
         <!-- Button to decrement the count -->
-        <button class="decrement-btn" onclick="decrementCount()">- - Decrement Count - -</button>
+        <button class="decrement-btn" onclick="decrementCount()">➖ Decrement ➖</button>
 
         <!-- Button to save the count and show history -->
-        <button class="save-btn" onclick="saveCount()">Save Count</button>
+        <button class="save-btn" onclick="saveCount()">💾 Save Count</button>
 
         <!-- Button to reset the count -->
-        <button class="reset-btn" onclick="resetCount()">Reset Count</button>
+        <button class="reset-btn" onclick="resetCount()">🔥 Reset Count</button>
 
         <!-- Container to display the count history -->
         <div class="historyContainer">
@@ -121,7 +127,7 @@
             <div id="history"></div>
 
             <!-- Button to clear the count history -->
-            <button class="history-btn" onclick="resetHistory()">Clear History</button>
+            <button class="history-btn" onclick="resetHistory()">☢️ Clear History</button>
         </div>
 
     </div>
@@ -164,6 +170,7 @@
             const historyLine = `${dateString} ${timeString} - Count: ${curCount} ${passenger()}`; // Create the history entry text
 
             historyEntries.push(historyLine); // Add the history entry to the array
+            historyEntries.reverse(); // Reverse the order of history entries
             document.getElementById('history').innerHTML = historyEntries.join("<br>"); // Update the displayed history with line breaks between entries
             curCount = 0; // Reset the current count to zero after saving
             viewCount.innerHTML = 'Saved!'; // Show a message in the view indicating that the count is saved
@@ -188,10 +195,10 @@
         // Function to toggle the visibility of the history container based on the number of history entries
         toggleHistory = () => {
             const historyContainer = document.querySelector('.historyContainer'); // Get the history container element
-            if (historyEntries.length > 0) {
-                historyContainer.style.visibility = "visible"; // If there are history entries, make the history container visible
-            } else {
-                historyContainer.style.visibility = "hidden"; // If there are no history entries, hide the history container
+            if (historyEntries.length > 0 || historyContainer.classList.contains('hideHistory')) {
+                historyContainer.classList.remove('hideHistory'); // If there are history entries, make the history container visible
+            } else if (!historyEntries.length > 0 || !historyContainer.classList.contains('hideHistory')) {
+                historyContainer.classList.add('hideHistory'); // If there are no history entries, hide the history container
             }
         }
     </script>
