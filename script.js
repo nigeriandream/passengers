@@ -48,8 +48,9 @@ resetHistory = () => {
     if (confirm("Are you sure you want to clear the count history?") === true) {
         historyEntries = []; // Clear the history entries array
         toggleHistory(); // Toggle the visibility of the history container
+        viewCount.innerHTML = 'Count history was cleared.'; // If history is cleared, show a message in the view
     } else {
-        viewCount.innerHTML = 'Count history reset cancelled.'; // If history reset is cancelled, show a message in the view
+        viewCount.innerHTML = 'Count history reset was cancelled.'; // If history reset is cancelled, show a message in the view
     }
 }
 
