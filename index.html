@@ -146,6 +146,10 @@
         let viewCount = document.getElementById('count'); // References the element to display the current count
         let historyEntries = []; // An array to store the history entries
 
+        const currentDate = new Date(); // Get the current date and time
+        const dateString = currentDate.toLocaleDateString(); // Format the date as a string
+        const timeString = currentDate.toLocaleTimeString(); // Format the time as a string
+
         // Function to determine the correct pluralization of the word "Passenger" based on the current count
         let passenger = () => curCount === 1 ? 'Passenger' : 'Passengers';
 
@@ -173,9 +177,6 @@
 
         // Function to add a new history entry and reset the count
         addHistory = () => {
-            const currentDate = new Date(); // Get the current date and time
-            const dateString = currentDate.toLocaleDateString(); // Format the date as a string
-            const timeString = currentDate.toLocaleTimeString(); // Format the time as a string
             const historyLine = `${dateString} ${timeString} - Count: ${curCount} ${passenger()}`; // Create the history entry text
 
             historyEntries.push(historyLine); // Add the history entry to the array
@@ -227,7 +228,7 @@
             // Create a download link and trigger click event
             const link = document.createElement("a");
             link.href = URL.createObjectURL(blob);
-            link.download = "passenger-count-history.csv";
+            link.download = `passenger-count-${dateString}-${timeString}.csv`;
             link.style.display = "none";
             document.body.appendChild(link);
             link.click();
