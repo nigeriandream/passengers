@@ -14,17 +14,26 @@ incrementCount = () => {
 
 // Function to decrement the count and update the view
 decrementCount = () => {
-    curCount > 0 ? curCount-- : false; // Decrease the current count, but ensure it never goes below zero
-    viewCount.innerHTML = `${curCount} ${passenger()}`; // Update the displayed count with the correct pluralization
+    if (curCount > 0) {
+        curCount-- // Decrease the current count, but ensure it never goes below zero
+        viewCount.innerHTML = `${curCount} ${passenger()}`; // Update the displayed count with the correct pluralization
+    } else {
+        viewCount.innerHTML = 'Already at minimum!';
+    }
+    // curCount > 0 ? curCount-- : false; // Decrease the current count, but ensure it never goes below zero
 }
 
 // Function to reset the count and ask for confirmation before resetting
 resetCount = () => {
-    if (confirm("Are you sure you want to reset the counter?") === true) {
-        curCount = 0; // Reset the current count to zero
-        viewCount.innerHTML = 'Counter Reset'; // Update the displayed count to indicate the reset
+    if (curCount > 0) {
+        if (confirm(`Are you sure you want to reset the counter? currently ${curCount} ${passenger()}`) === true) {
+            curCount = 0; // Reset the current count to zero
+            viewCount.innerHTML = 'Counter has been reset'; // Update the displayed count to indicate the reset
+        } else {
+            viewCount.innerHTML = 'Reset cancelled.'; // If reset is cancelled, show a message in the view
+        }
     } else {
-        viewCount.innerHTML = 'Reset Cancelled.'; // If reset is cancelled, show a message in the view
+        viewCount.innerHTML = 'Nothing to Reset!'
     }
 }
 
@@ -62,9 +71,9 @@ saveCount = () => {
 // Function to toggle the visibility of the history container based on the number of history entries
 toggleHistory = () => {
     const historyContainer = document.querySelector('.history-container'); // Get the history container element
-    if (historyEntries.length > 0 || historyContainer.classList.contains('hide-history')) {
+    if (historyEntries.length > 0 && historyContainer.classList.contains('hide-history')) {
         historyContainer.classList.remove('hide-history'); // If there are history entries, make the history container visible
-    } else if (!historyEntries.length > 0 || !historyContainer.classList.contains('hide-history')) {
+    } else if (!historyEntries.length > 0 && !historyContainer.classList.contains('hide-history')) {
         historyContainer.classList.add('hide-history'); // If there are no history entries, hide the history container
     }
 }
