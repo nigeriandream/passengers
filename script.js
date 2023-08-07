@@ -3,10 +3,6 @@ let curCount = 0; // Keeps track of the current count
 let viewCount = document.getElementById('count'); // References the element to display the current count
 let historyEntries = []; // An array to store the history entries
 
-const currentDate = new Date(); // Get the current date and time
-const dateString = currentDate.toLocaleDateString(); // Format the date as a string
-const timeString = currentDate.toLocaleTimeString(); // Format the time as a string
-
 // Function to determine the correct pluralization of the word "Passenger" based on the current count
 let passenger = () => curCount === 1 ? 'Passenger' : 'Passengers';
 
@@ -34,6 +30,9 @@ resetCount = () => {
 
 // Function to add a new history entry and reset the count
 addHistory = () => {
+    const currentDate = new Date(); // Get the current date and time
+    const dateString = currentDate.toLocaleDateString(); // Format the date as a string
+    const timeString = currentDate.toLocaleTimeString(); // Format the time as a string
     const historyLine = `${dateString} ${timeString} - Count: ${curCount} ${passenger()}`; // Create the history entry text
 
     historyEntries.push(historyLine); // Add the history entry to the array
@@ -73,6 +72,9 @@ toggleHistory = () => {
 // Function to save the count history as a CSV file
 function saveHistoryToCSV() {
     // Prepare CSV content
+    const currentDate = new Date(); // Get the current date and time
+    const dateString = currentDate.toLocaleDateString(); // Format the date as a string
+    const timeString = currentDate.toLocaleTimeString(); // Format the time as a string
     let csvContent = "Date,Time,Count\n"; // Header row
     historyEntries.forEach(entry => {
         const [dateTime, count] = entry.split(" - ");
