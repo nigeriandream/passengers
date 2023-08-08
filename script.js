@@ -26,7 +26,7 @@ decrementCount = () => {
 // Function to reset the count and ask for confirmation before resetting
 resetCount = () => {
     if (curCount > 0) {
-        if (confirm(`Are you sure you want to reset the counter? currently ${curCount} ${passenger()}`) === true) {
+        if (confirm(`Are you sure you want to reset the counter? currently ${curCount} ${passenger()} counted`) === true) {
             curCount = 0; // Reset the current count to zero
             viewCount.innerHTML = 'Counter has been reset'; // Update the displayed count to indicate the reset
         } else {
@@ -64,7 +64,10 @@ resetHistory = () => {
 
 // Function to save the current count, add history, and toggle the history container visibility
 saveCount = () => {
-    curCount > 0 ? addHistory() : false; // If the current count is greater than zero, add a history entry; otherwise, do nothing
+    if (curCount > 0) {
+        addHistory()
+    }
+    else { confirm("Are you sure you want to save an empty count?") === true ? addHistory() : viewCount.innerHTML = 'Nothing to Save!' }; // If the current count is greater than zero, add a history entry; otherwise, verify the user is willing to save an empty count
     toggleHistory(); // Toggle the visibility of the history container
 }
 
