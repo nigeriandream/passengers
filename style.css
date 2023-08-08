@@ -34,15 +34,6 @@
             transition: 0.3s ease all;
         }
 
-        button:hover {
-            transform: scale(1.02);
-        }
-
-        button:active {
-            transform: scale(1);
-        }
-
-
         /* Styling for specific buttons */
         .increment-btn {
             background-color: rgba(0, 184, 138, .85);
@@ -123,8 +114,34 @@
 
         /* Responsive */
         @media (orientation: portrait) {
+
             button {
                 width: 90%;
                 height: 160px;
+                font-size: 3rem !important;
+            }
+
+            button:active {
+                transform: scale(0.98);
+            }
+
+            #history,
+            .history-container {
+                font-size: 2rem;
+            }
+
+            #count {
+                font-size: 4rem;
+            }
+        }
+
+        @media (orientation: landscape) {
+
+            button:hover {
+                transform: scale(1.02);
+            }
+
+            button:active {
+                transform: scale(1);
             }
         }
