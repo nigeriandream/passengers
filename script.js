@@ -2,6 +2,8 @@
 let curCount = 0; // Keeps track of the current count
 let viewCount = document.getElementById('count'); // References the element to display the current count
 let historyEntries = []; // An array to store the history entries
+let totalCount = 0; // store the total history count
+let totalView = document.getElementById('total'); // References the element to display the total history count
 
 // Function to determine the correct pluralization of the word "Passenger" based on the current count
 let passenger = () => curCount === 1 ? 'Passenger' : 'Passengers';
@@ -47,6 +49,8 @@ addHistory = () => {
     historyEntries.push(historyLine); // Add the history entry to the array
     historyEntries.reverse(); // Reverse the order of history entries
     document.getElementById('history').innerHTML = historyEntries.join("<br>"); // Update the displayed history with line breaks between entries - (Ozor A.)
+    totalCount += curCount; // Update the total history count
+    totalView.innerHTML = `Total History Count: ${totalCount}`;
     curCount = 0; // Reset the current count to zero after saving
     viewCount.innerHTML = 'Saved!'; // Show a message in the view indicating that the count is saved
 }
@@ -55,6 +59,7 @@ addHistory = () => {
 resetHistory = () => {
     if (confirm("Are you sure you want to clear the count history?") === true) {
         historyEntries = []; // Clear the history entries array
+        totalCount = 0; // Clear the total history count
         toggleHistory(); // Toggle the visibility of the history container
         viewCount.innerHTML = 'Count history was cleared.'; // If history is cleared, show a message in the view
     } else {
