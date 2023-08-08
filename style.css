@@ -100,5 +100,6 @@
         @media (orientation: portrait) {
             button {
                 width: 90%;
+                height: 110px;
             }
         }
