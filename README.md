@@ -1,6 +1,6 @@
-# Passenger Count Application
+# Passenger Counter Application
 
-This is a simple web application that allows you to keep track of the number of passengers and save the count history as well as export it as a CSV file.
+This is a simple web application that allows you to keep track of the number of passengers and save the count history as well as export it as a CSV file. Preview link: [Passengers](https://nigeriandream.github.io/passengers/)
 
 ## Features
 
