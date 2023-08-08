@@ -13,8 +13,8 @@
             width: 90%;
             background-color: #00000066;
             backdrop-filter: blur(7px);
-            margin: 3% auto;
-            padding: 0.6rem 0.6rem;
+            margin: 2% auto;
+            padding: 1rem;
             min-height: 80%;
             border-radius: 1rem;
         }
@@ -100,6 +100,24 @@
 
         .hide-history {
             display: none;
+        }
+
+
+        /* Video BG Styling */
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -5;
+            overflow: hidden;
+        }
+
+        video {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
         }
 
         /* Responsive */
