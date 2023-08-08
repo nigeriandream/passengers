@@ -7,18 +7,19 @@ This is a simple web application that allows you to keep track of the number of 
 - Increment and decrement passenger count.
 - Save passenger count history with timestamps.
 - Export the count history as a CSV file.
+- Responsive styling for mobile devices.
 
 ## Usage
 
 1. Open the `index.html` file in your web browser.
 
-2. Use the "+ + Increment Count + +" button to increase the passenger count and the "- - Decrement Count - -" button to decrease it.
+2. Use the "+ Increment" button to increase the passenger count and the "- Decrement" button to decrease it.
 
 3. Click the "Save Count" button to save the current count along with a timestamp to the history.
 
 4. The count history will be displayed below the buttons. You can clear the history by clicking the "Clear History" button.
 
-5. To export the count history as a CSV file, click the "Export History as CSV" button. The file will be downloaded with the name in the format `passenger-count-YYYY-MM-DD-HH-MM-SS.csv`.
+5. To export the count history as a CSV file, click the "Export as CSV" button. The file will be downloaded with the name in the format `passenger-count-YYYY-MM-DD-HH-MM-SS.csv`.
 
 ## How it Works
 
