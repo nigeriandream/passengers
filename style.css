@@ -85,6 +85,12 @@
             overflow-y: scroll;
         }
 
+        #total {
+            line-height: 1.5;
+            min-height: 15px;
+            margin-bottom: 10px;
+        }
+
         .history-container {
             margin-top: 20px;
             padding: 10px;
@@ -100,6 +106,6 @@
         @media (orientation: portrait) {
             button {
                 width: 90%;
-                height: 110px;
+                height: 160px;
             }
         }
